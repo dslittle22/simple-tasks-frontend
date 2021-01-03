@@ -5,7 +5,7 @@ import Icon from './SVG';
 const Task = ({ data, fakeDelete }) => {
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(data.title);
-  const { id, title, complete, user_Id } = data;
+  const { title } = data;
 
   const toggleEditMode = () => {
     setEditMode(!editMode);

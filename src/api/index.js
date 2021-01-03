@@ -2,7 +2,6 @@ const { REACT_APP_SERVER_URL } = process.env;
 const server_url = 'https://' + REACT_APP_SERVER_URL;
 
 export const getTasks = async user_Id => {
-  console.log(server_url);
   const response = await fetch(`${server_url}/tasks/${user_Id}`);
   const data = await response.json();
   return data;
@@ -33,9 +32,11 @@ export const deleteTask = async ({ id, fake, title }, user_Id) => {
         `${server_url}/tasks/${real_Id}`,
         request
       );
+      if (deletedTask.ok) console.log(deletedTask.status);
       window.location.reload();
     } else {
       const deletedTask = await fetch(`${server_url}/tasks/${id}`, request);
+      if (deletedTask.ok) console.log(deletedTask.status);
     }
   } catch (error) {
     console.error(error.message);
@@ -54,6 +55,7 @@ export const editTask = async ({ title, id, fake }, newTitle, user_Id) => {
       real_Id = await getRealTaskId(title, user_Id);
     }
     const editTask = await fetch(`${server_url}/tasks/${real_Id}`, request);
+    if (editTask.ok) console.log(editTask.status);
     window.location.reload();
   } catch (error) {
     console.error(error.message);
@@ -68,6 +70,7 @@ export const newTask = async (title, user_Id, tasksContainsFake) => {
       body: JSON.stringify({ title, user_Id }),
     };
     const addTask = await fetch(`${server_url}/tasks/`, request);
+    if (addTask.ok) console.log(addTask.status);
     if (tasksContainsFake) {
       window.location.reload();
     } else {
