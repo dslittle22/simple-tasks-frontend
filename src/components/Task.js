@@ -24,6 +24,7 @@ const Task = ({ data, fakeDelete }) => {
             data={data}
             newTitle={newTitle}
             fakeDelete={fakeDelete}
+            toggleEditMode={toggleEditMode}
           />
         </>
       ) : (

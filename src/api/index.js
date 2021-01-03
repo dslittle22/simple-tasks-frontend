@@ -32,11 +32,12 @@ export const deleteTask = async ({ id, fake, title }, user_Id) => {
         `${server_url}/tasks/${real_Id}`,
         request
       );
-      if (deletedTask.ok) console.log(deletedTask.status);
-      window.location.reload();
+      const response = await deletedTask.json();
+      console.log(response);
     } else {
       const deletedTask = await fetch(`${server_url}/tasks/${id}`, request);
-      if (deletedTask.ok) console.log(deletedTask.status);
+      const response = await deletedTask.json();
+      console.log(response);
     }
   } catch (error) {
     console.error(error.message);
@@ -56,13 +57,13 @@ export const editTask = async ({ title, id, fake }, newTitle, user_Id) => {
     }
     const editTask = await fetch(`${server_url}/tasks/${real_Id}`, request);
     if (editTask.ok) console.log(editTask.status);
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     console.error(error.message);
   }
 };
 
-export const newTask = async (title, user_Id, tasksContainsFake) => {
+export const insertNewTask = async (title, user_Id, tasksContainsFake) => {
   try {
     const request = {
       method: 'POST',
@@ -70,16 +71,12 @@ export const newTask = async (title, user_Id, tasksContainsFake) => {
       body: JSON.stringify({ title, user_Id }),
     };
     const addTask = await fetch(`${server_url}/tasks/`, request);
-    if (addTask.ok) console.log(addTask.status);
-    if (tasksContainsFake) {
-      window.location.reload();
+    const response = await addTask.json();
+    console.log(response);
+    if (response.ok) {
+      return response.id;
     } else {
-      const fakeTask = {
-        title: title,
-        fake: true,
-        id: 'fake',
-      };
-      return fakeTask;
+      return response;
     }
   } catch (error) {
     console.error(error.message);

@@ -1,8 +1,17 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { deleteTask, editTask } from '../api';
-const EditButtons = ({ data, newTitle, fakeDelete }) => {
+import useTasksState from './useTasksCtx';
+
+const EditButtons = ({ data, newTitle, fakeDelete, toggleEditMode }) => {
   const { user } = useAuth0();
+  const { editTaskState } = useTasksState();
+
+  const handleEditTask = () => {
+    editTask(data, newTitle, user.sub);
+    editTaskState(data.id, newTitle);
+    toggleEditMode();
+  };
 
   return (
     <div>
@@ -15,9 +24,7 @@ const EditButtons = ({ data, newTitle, fakeDelete }) => {
         Delete
       </button>
       {newTitle !== data.title && (
-        <button onClick={() => editTask(data, newTitle, user.sub)}>
-          Save Changes
-        </button>
+        <button onClick={handleEditTask}>Save Changes</button>
       )}
     </div>
   );

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { newTask } from '../api';
-const InputTasks = ({ tasks, setTasks }) => {
+import { insertNewTask } from '../api';
+import useTasksState from './useTasksCtx';
+const InputTasks = () => {
   const { user } = useAuth0();
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const { tasks, setTasks } = useTasksState();
 
   const newTaskHelper = async () => {
-    let tasksContainsFake = false;
-    for (var task of tasks) {
-      if (task.fake === true) {
-        tasksContainsFake = true;
-        break;
-      }
-    }
-    const fakeTask = await newTask(newTaskTitle, user.sub, tasksContainsFake);
+    const fakeTask = {
+      title: newTaskTitle,
+      id: new Date(),
+      fake: true,
+    };
+
     setTasks([...tasks, fakeTask]);
+    setNewTaskTitle('saving task in database...');
+    await insertNewTask(newTaskTitle, user.sub);
     setNewTaskTitle('');
   };
 
@@ -26,11 +28,7 @@ const InputTasks = ({ tasks, setTasks }) => {
           value={newTaskTitle}
           onChange={e => setNewTaskTitle(e.target.value)}
         />
-        {newTaskTitle ? (
-          <button onClick={() => newTaskHelper()}>Save Task</button>
-        ) : (
-          ''
-        )}
+        {newTaskTitle ? <button onClick={newTaskHelper}>Save Task</button> : ''}
       </div>
     </div>
   );
