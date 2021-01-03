@@ -2,6 +2,7 @@ html {
   box-sizing: border-box;
   font-family: 'Helvetica', 'Arial', sans-serif;
   font-size: 10px;
+  height: 100%;
 }
 
 body {
@@ -10,6 +11,13 @@ body {
   font-size: 1.6rem;
   color: rgb(63, 63, 63);
   width: min(90%, 800px);
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
 }
 
 *,
@@ -44,4 +52,37 @@ input {
   width: 300px;
   font-size: 1.6rem;
   color: #555;
+}
+
+footer {
+  grid-row: 5 / 6;
+  font-size: 15px;
+  margin-top: 2rem;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: max(300px, 20%);
+  align-items: center;
+  justify-content: center;
+  color: rgb(33, 33, 33);
+  flex-shrink: 0;
+}
+
+a {
+  color: hsl(0, 58%, 50%);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.footer-inner-container {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 0 2rem;
+}
+.footer-row {
+  display: flex;
+  justify-content: space-around;
 }

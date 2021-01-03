@@ -5,7 +5,7 @@ import useTasksState from './useTasksCtx';
 
 const EditButtons = ({ data, newTitle, fakeDelete, toggleEditMode }) => {
   const { user } = useAuth0();
-  const { editTaskState } = useTasksState();
+  const { tasks, setTasks, editTaskState } = useTasksState();
 
   const handleEditTask = () => {
     editTask(data, newTitle, user.sub);
@@ -18,7 +18,7 @@ const EditButtons = ({ data, newTitle, fakeDelete, toggleEditMode }) => {
       <button
         onClick={() => {
           deleteTask(data, user.sub);
-          fakeDelete(data.id);
+          setTasks(tasks.filter(task => task.id !== data.id));
         }}
       >
         Delete

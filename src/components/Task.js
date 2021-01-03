@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EditButtons from './EditButtons';
 import Icon from './SVG';
 
-const Task = ({ data, fakeDelete }) => {
+const Task = ({ data }) => {
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(data.title);
   const { title } = data;
@@ -23,7 +23,6 @@ const Task = ({ data, fakeDelete }) => {
           <EditButtons
             data={data}
             newTitle={newTitle}
-            fakeDelete={fakeDelete}
             toggleEditMode={toggleEditMode}
           />
         </>
