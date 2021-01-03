@@ -1,0 +1,47 @@
+html {
+  box-sizing: border-box;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 10px;
+}
+
+body {
+  margin: 0 auto;
+  line-height: 1.5;
+  font-size: 1.6rem;
+  color: rgb(63, 63, 63);
+  width: min(90%, 800px);
+}
+
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1,
+h2,
+strong {
+  color: #333;
+  padding: 0.5em 0 0.5em;
+}
+
+button {
+  margin: 0 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  background: hsl(0, 0%, 73%);
+  border: none;
+}
+
+input {
+  width: 300px;
+  font-size: 1.6rem;
+  color: #555;
+}
