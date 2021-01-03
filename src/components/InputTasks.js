@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { insertNewTask } from '../api';
 import useTasksState from './useTasksCtx';
@@ -7,7 +7,8 @@ const InputTasks = () => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const { tasks, setTasks } = useTasksState();
 
-  const newTaskHelper = async () => {
+  const memoizedNewTask = useCallback(async () => {
+    if (newTaskTitle === '') return;
     const fakeTask = {
       title: newTaskTitle,
       id: new Date(),
@@ -18,7 +19,19 @@ const InputTasks = () => {
     setNewTaskTitle('saving task in database...');
     await insertNewTask(newTaskTitle, user.sub);
     setNewTaskTitle('');
-  };
+  }, [newTaskTitle, setTasks, tasks, user.sub]);
+
+  useEffect(() => {
+    const hitEnter = e => {
+      if (e.code !== 'Enter') return;
+      memoizedNewTask();
+    };
+
+    document.addEventListener('keydown', hitEnter);
+    return () => {
+      document.removeEventListener('keydown', hitEnter);
+    };
+  }, [memoizedNewTask]);
 
   return (
     <div>
@@ -28,7 +41,11 @@ const InputTasks = () => {
           value={newTaskTitle}
           onChange={e => setNewTaskTitle(e.target.value)}
         />
-        {newTaskTitle ? <button onClick={newTaskHelper}>Save Task</button> : ''}
+        {newTaskTitle ? (
+          <button onClick={memoizedNewTask}>Save Task</button>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
