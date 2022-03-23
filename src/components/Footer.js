@@ -7,7 +7,7 @@ const Footer = () => {
         <p className='footer-row'>Made by Danny Little in 2020.</p>
         <p className='footer-row'>
           <a href='https://dannylittle.vercel.app'>Website</a>
-          <a href='https://github.com/dannylittle715'>Github</a>
+          <a href='https://github.com/dslittle22'>Github</a>
           <a href='https://www.linkedin.com/in/danny-little-3b3665178/'>
             LinkedIn
           </a>
